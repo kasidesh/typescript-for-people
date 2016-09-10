@@ -1,9 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var Captcha = (function () {
     function Captcha() {
     }
@@ -40,34 +35,27 @@ var Captcha = (function () {
     return Captcha;
 }());
 exports.Captcha = Captcha;
-var Operand = (function () {
-    function Operand(n) {
-        this.n = n;
-    }
-    Operand.prototype.toText = function () { return ''; };
-    ;
-    return Operand;
-}());
-var TextOperand = (function (_super) {
-    __extends(TextOperand, _super);
+var TextOperand = (function () {
     function TextOperand(n) {
-        //super has to upper line in constructor
-        _super.call(this, n);
+        this.n = n;
         this.numberWord = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eigth', 'Nine'];
     }
     TextOperand.prototype.toText = function () {
         return this.numberWord[this.n];
     };
     return TextOperand;
-}(Operand));
-var NumberOperand = (function (_super) {
-    __extends(NumberOperand, _super);
+}());
+var NumberOperand = (function () {
     function NumberOperand(n) {
-        //super has to upper line in constructor
-        _super.call(this, n);
+        this.n = n;
     }
     NumberOperand.prototype.toText = function () {
         return this.n.toString();
     };
     return NumberOperand;
-}(Operand));
+}());
+var Operator = (function () {
+    function Operator(symbol) {
+    }
+    return Operator;
+}());

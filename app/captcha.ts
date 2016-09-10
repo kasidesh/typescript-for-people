@@ -39,19 +39,15 @@ export class Captcha {
     }
 }
 
-class Operand {
-    n:number;
-    constructor(n:number) {
-        this.n = n;
-    }
-    toText(): string { return '';};
+interface Operand {
+    toText(): string;
 }
 
-class TextOperand extends Operand {
+class TextOperand implements Operand {
+    n:number;
     numberWord:Array<string>;
     constructor(n:number) {
-        //super has to upper line in constructor
-        super(n);
+        this.n = n;
         this.numberWord = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eigth','Nine'];
     }
 
@@ -59,11 +55,10 @@ class TextOperand extends Operand {
         return this.numberWord[this.n];
     }
 }
-class NumberOperand extends Operand{
+class NumberOperand implements Operand{
     n:number;
     constructor(n:number) {
-        //super has to upper line in constructor
-        super(n);
+        this.n = n;
     }
 
     toText() : string {
@@ -73,6 +68,6 @@ class NumberOperand extends Operand{
 
 class Operator {
     constructor(symbol:string) {
-        
+
     }
 }
