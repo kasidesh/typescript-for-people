@@ -1,4 +1,9 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Captcha = (function () {
     function Captcha() {
     }
@@ -6,17 +11,17 @@ var Captcha = (function () {
         var leftOperand;
         var rightOperand;
         if (pattern === 1) {
-            leftOperand = new NumberOperand(left).toText();
-            rightOperand = new TextOperand(right).toText();
+            leftOperand = new NumberOperand(left);
+            rightOperand = new TextOperand(right);
         }
         else if (pattern === 2) {
-            leftOperand = new TextOperand(left).toText();
-            rightOperand = new NumberOperand(right).toText();
+            leftOperand = new TextOperand(left);
+            rightOperand = new NumberOperand(right);
         }
         else {
             throw new Error('please define pattern 1 or 2');
         }
-        return leftOperand + " " + operator + " " + rightOperand;
+        return leftOperand.toText() + " " + operator + " " + rightOperand.toText();
     };
     Captcha.prototype.calculateResult = function (left, right, operator) {
         if (operator === '+') {
@@ -35,22 +40,34 @@ var Captcha = (function () {
     return Captcha;
 }());
 exports.Captcha = Captcha;
-var TextOperand = (function () {
-    function TextOperand(n) {
-        this.numberWord = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eigth', 'Nine'];
+var Operand = (function () {
+    function Operand(n) {
         this.n = n;
+    }
+    Operand.prototype.toText = function () { return ''; };
+    ;
+    return Operand;
+}());
+var TextOperand = (function (_super) {
+    __extends(TextOperand, _super);
+    function TextOperand(n) {
+        //super has to upper line in constructor
+        _super.call(this, n);
+        this.numberWord = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eigth', 'Nine'];
     }
     TextOperand.prototype.toText = function () {
         return this.numberWord[this.n];
     };
     return TextOperand;
-}());
-var NumberOperand = (function () {
+}(Operand));
+var NumberOperand = (function (_super) {
+    __extends(NumberOperand, _super);
     function NumberOperand(n) {
-        this.n = n;
+        //super has to upper line in constructor
+        _super.call(this, n);
     }
     NumberOperand.prototype.toText = function () {
         return this.n.toString();
     };
     return NumberOperand;
-}());
+}(Operand));

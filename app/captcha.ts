@@ -10,20 +10,20 @@ export class Captcha {
         right:number, 
         operator:string) :string {
 
-        let leftOperand;
-        let rightOperand;
+        let leftOperand : Operand;
+        let rightOperand: Operand;
         if(pattern === 1) {
-            leftOperand = new NumberOperand(left).toText();
-            rightOperand = new TextOperand(right).toText();
+            leftOperand = new NumberOperand(left);
+            rightOperand = new TextOperand(right);
             //return `${left} ${operator} ${this.numberWord[right]}`;
         } else if(pattern === 2) {
-            leftOperand = new TextOperand(left).toText();
-            rightOperand = new NumberOperand(right).toText();
+            leftOperand = new TextOperand(left);
+            rightOperand = new NumberOperand(right);
             //return `${this.numberWord[left]} ${operator} ${right}`;
         } else {
             throw new Error('please define pattern 1 or 2');
         }
-        return `${leftOperand} ${operator} ${rightOperand}`;
+        return `${leftOperand.toText()} ${operator} ${rightOperand.toText()}`;
     }
     
     calculateResult(left:number, right:number, operator:string) : number {
@@ -39,25 +39,40 @@ export class Captcha {
     }
 }
 
-class TextOperand {
-    numberWord:Array<string>;
+class Operand {
     n:number;
     constructor(n:number) {
-        this.numberWord = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eigth','Nine'];
         this.n = n;
+    }
+    toText(): string { return '';};
+}
+
+class TextOperand extends Operand {
+    numberWord:Array<string>;
+    constructor(n:number) {
+        //super has to upper line in constructor
+        super(n);
+        this.numberWord = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eigth','Nine'];
     }
 
     toText() : string {
         return this.numberWord[this.n];
     }
 }
-class NumberOperand {
+class NumberOperand extends Operand{
     n:number;
     constructor(n:number) {
-        this.n = n;
+        //super has to upper line in constructor
+        super(n);
     }
 
     toText() : string {
         return this.n.toString();
+    }
+}
+
+class Operator {
+    constructor(symbol:string) {
+        
     }
 }
